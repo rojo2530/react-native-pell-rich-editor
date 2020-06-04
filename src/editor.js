@@ -150,7 +150,10 @@ const HTML = `
             },
             content: {
                 setHtml: function(html) {
-                    editor.content.innerHTML += html;
+                    editor.content.innerHTML = html;
+                },
+                addHtml: function(html) {
+                  editor.content.innerHTML += html;
                 },
                 getHtml: function() {
                     return editor.content.innerHTML;

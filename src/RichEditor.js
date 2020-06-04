@@ -184,6 +184,10 @@ export default class RichTextEditor extends Component {
         this._sendAction(actions.content, 'setHtml', html);
     }
 
+    addContentHTML(html) {
+      this._sendAction(actions.content, 'addHtml', html);
+    }
+
     setPlaceholder(placeholder) {
         this._sendAction(actions.content, 'setPlaceholder', placeholder);
     }
