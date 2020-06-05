@@ -1534,7 +1534,7 @@
           console.warn("Tribute was already bound to " + el.nodeName);
         }
 
-        //this.ensureEditable(el);
+        this.ensureEditable(el);
         this.events.bind(el);
         el.setAttribute("data-tribute", true);
       }
