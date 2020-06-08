@@ -62,6 +62,8 @@ declare module "react-native-pell-rich-editor" {
          */
         setContentHTML: (html: string) => void;
 
+        setData: (data: Array<Object>) => void;
+
         addContentHTML: (html: string) => void;
 
         blurContentEditor: () => void;
