@@ -5,7 +5,7 @@ import {actions} from './const';
 const defaultActions = [
     actions.insertImage,
     actions.setBold,
-    actions.setItalic,
+    actions.setStrikethrough,
     actions.insertBulletsList,
     actions.insertOrderedList,
     actions.insertLink,
@@ -15,7 +15,7 @@ function getDefaultIcon() {
     const texts = {};
     texts[actions.insertImage] = require('../img/icon_format_media.png');
     texts[actions.setBold] = require('../img/icon_format_bold.png');
-    texts[actions.setItalic] = require('../img/icon_format_italic.png');
+    texts[actions.setStrikethrough] = require('../img/icon_format_strikethrough.png');
     texts[actions.insertBulletsList] = require('../img/icon_format_ul.png');
     texts[actions.insertOrderedList] = require('../img/icon_format_ol.png');
     texts[actions.insertLink] = require('../img/icon_format_link.png');
