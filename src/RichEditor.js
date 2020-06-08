@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {WebView} from 'react-native-webview';
-import {actions, messages} from './const';
-import {Dimensions, PixelRatio, Platform, StyleSheet, View} from 'react-native';
-import {HTML} from './editor';
+import { WebView } from 'react-native-webview';
+import { actions, messages } from './const';
+import { Dimensions, PixelRatio, Platform, StyleSheet, View } from 'react-native';
+import { HTML } from './editor';
 
 const PlatformIOS = Platform.OS === 'ios';
 
@@ -122,6 +122,12 @@ export default class RichTextEditor extends Component {
         }
     };
 
+    componentDidMount() {
+      if (!PlatformIOS) {
+        this.webviewBridge.requestFocus();
+      }
+    }
+
     _sendAction(type, action, data) {
         let jsonString = JSON.stringify({type, name: action, data});
         if (this.webviewBridge) {
@@ -140,6 +146,7 @@ export default class RichTextEditor extends Component {
             ref={(r) => {
                 this.webviewBridge = r;
             }}
+            keyboardDisplayRequiresUserAction={false}
             onMessage={this.onMessage}
             originWhitelist={['*']}
             dataDetectorTypes={'none'}
@@ -184,8 +191,8 @@ export default class RichTextEditor extends Component {
         this._sendAction(actions.content, 'setHtml', html);
     }
 
-    addContentHTML(html) {
-      this._sendAction(actions.content, 'addHtml', html);
+    setData(data) {
+      this._sendAction(actions.content, 'setData', data);
     }
 
     setPlaceholder(placeholder) {
@@ -208,6 +215,7 @@ export default class RichTextEditor extends Component {
         let that = this;
         that.isInit = true;
         that.setContentHTML(this.props.initialContentHTML);
+        that.setData(this.props.data);
         that.setPlaceholder(this.props.placeholder);
         that.props.editorInitializedCallback && that.props.editorInitializedCallback();
 
