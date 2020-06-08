@@ -24,10 +24,123 @@ const HTML = `
             color: #a9a9a9;
         }
     </style>
+    <style>
+    body {
+      position: relative;
+    }
+    .tribute-demo-input {
+      outline: none;
+      border: 1px solid #eee;
+      padding: 3px 5px;
+      border-radius: 2px;
+      font-size: 15px;
+      min-height: 32px;
+      cursor: text;
+    }
+    .tribute-demo-input:focus {
+      border-color: #d1d1d1;
+      background-color: #fbfbfb;
+    }
+    [contenteditable="true"]:empty:before {
+      content: attr(placeholder);
+      display: block;
+      color: #ccc;
+    }
+    #test-autocomplete-container {
+      position: relative;
+    }
+    #test-autocomplete-textarea-container {
+      position: relative;
+    }
+    .float-right {
+      float: right;
+    }
+  </style>
+  <style>
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  max-height: 300px;
+  max-width: 500px;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+}
+.avatar {
+  height: 30px;
+  width: 30px;
+  padding-right: 5px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #efefef;
+}
+.tribute-container li {
+  padding: 5px 5px;
+  cursor: pointer;
+  display:flex;
+}
+.tribute-container li.highlight {
+  background: #ddd;
+}
+.tribute-container li span {
+  font-weight: bold;
+}
+.tribute-container li.no-match {
+  cursor: default;
+}
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}
+</style>    
+  <script type='text/javascript' src="https://raw.githack.com/rojo2530/react-native-pell-rich-editor/master/src/tribute.js"></script>
 </head>
+
 <body>
-<div class="content"><div id="editor" class="pell"></div></div>
+
+
+
+<div class="content"><div tabindex="0" id="editor"  class="pell"></div></div>
+
 <script>
+    
+    function mentions (users) {
+      if (!users) {
+        return null;
+      }
+
+      var tribute = new Tribute({
+        // menuContainer: document.getElementById('content'),
+        values: users,
+        lookup: 'fullname',
+      
+        selectTemplate: function(item) {
+          if (typeof item === "undefined") return null;
+          if (this.range.isContentEditable(this.current.element)) {
+            return (
+              '<a id="user-mention" href="#" user-mentioned-id="' +
+              item.original.user_id +
+              '">' +
+              item.original.fullname +
+              "</a>"
+            );
+          }
+      
+          return "@" + item.original.value;
+        },
+        requireLeadingSpace: false
+      });
+      
+      tribute.attach(document.getElementById("editor-content"));
+    }
+
     (function (exports) {
         var defaultParagraphSeparatorString = 'defaultParagraphSeparator';
         var formatBlock = 'formatBlock';
@@ -77,19 +190,20 @@ const HTML = `
             },
             underline: {
                 state: function() {
-                    return queryCommandState('underline');
-                },
-                result: function() {
-                    return exec('underline');
-                }
-            },
-            strikethrough: {
-                state: function() {
+
                     return queryCommandState('strikeThrough');
                 },
                 result: function() {
                     return exec('strikeThrough');
                 }
+            },
+            strikethrough: {
+              state: function() {
+                return queryCommandState('strikeThrough');
+              },
+              result: function() {
+                return exec('strikeThrough');
+              }
             },
             heading1: {
                 result: function() {
@@ -145,16 +259,22 @@ const HTML = `
             },
             image: {
                 result: function(url) {
+                  
+                  console.time('Comienza...');
                     if (url) { exec('insertHTML', "<br><div><img src='"+ url +"'/></div><br>");}
-                }
+                    console.time('Finaliza');
+                    console.timeEnd('Finaliza');
+                  }
             },
             content: {
                 setHtml: function(html) {
-                    editor.content.innerHTML = html;
+                    editor.content.innerHTML += html;
                 },
-                addHtml: function(html) {
-                  editor.content.innerHTML += html;
+
+                setData: function(data) {
+                  mentions(data);
                 },
+                
                 getHtml: function() {
                     return editor.content.innerHTML;
                 },
@@ -168,7 +288,7 @@ const HTML = `
                     postAction({type: 'CONTENT_HTML_RESPONSE', data: editor.content.innerHTML});
                 },
                 setPlaceholder: function(placeholder){
-                    editor.content.setAttribute("placeholder", placeholder)
+                  editor.content.setAttribute("placeholder", placeholder)
                 }
             },
 
@@ -181,9 +301,7 @@ const HTML = `
         };
 
         var init = function init(settings) {
-
             var defaultParagraphSeparator = settings[defaultParagraphSeparatorString] || 'div';
-
 
             var content = settings.element.content = createElement('div');
             content.contentEditable = true;
@@ -192,6 +310,7 @@ const HTML = `
             content.autocorrect = 'off';
             content.autocomplete = 'off';
             content.className = "pell-content";
+            content.id="editor-content";
             content.oninput = function (_ref) {
                 var firstChild = _ref.target.firstChild;
 
@@ -259,14 +378,18 @@ const HTML = `
             document.addEventListener('touchend', function () {
                 content.focus();
             });
+            content.focus();
             return settings.element;
         };
 
         editor = init({
             element: document.getElementById('editor'),
-            defaultParagraphSeparator: 'div',
+            defaultParagraphSeparator: 'p',
         })
+
     })(window);
+
+
 </script>
 </body>
 </html>
