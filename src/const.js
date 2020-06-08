@@ -24,7 +24,7 @@ export const actions = {
     insertImage: 'image',
     setSubscript: 'subscript',
     setSuperscript: 'superscript',
-    setStrikethrough: 'strikeThrough',
+    setStrikethrough: 'strikethrough',
     setHR: 'horizontalRule',
     setIndent: 'indent',
     setOutdent: 'outdent',
