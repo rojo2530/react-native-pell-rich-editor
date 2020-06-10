@@ -100,12 +100,14 @@ const HTML = `
   font-weight: bold;
 }
 </style>    
-  <script type='text/javascript' src="https://raw.githack.com/rojo2530/react-native-pell-rich-editor/master/src/tribute.js"></script>
-</head>
+
+  <script type='text/javascript' src="Web.bundle/js/tribute.js"></script>
+
+
+  </head>
 
 <body>
-
-
+<p>Hola que tal</p>
 
 <div class="content"><div tabindex="0" id="editor"  class="pell"></div></div>
 
@@ -135,6 +137,14 @@ const HTML = `
       
           return "@" + item.original.value;
         },
+
+        menuItemTemplate: function (item) {
+          const image = '<img class="avatar" src="' + item.original.avatar + '" />';
+          return image + item.original.fullname; 
+         },
+
+
+        
         requireLeadingSpace: false
       });
       
