@@ -150,10 +150,10 @@ export default class RichTextEditor extends Component {
             onMessage={this.onMessage}
             originWhitelist={['*']}
             dataDetectorTypes={'none'}
-            domStorageEnabled={true}
+            domStorageEnabled={false}
             bounces={false}
             javaScriptEnabled={true}
-            source={{html: HTML, baseUrl: Platform.OS === 'ios' ? '' : 'file:///android_asset/' }}
+            source={{html: HTML}}
             onLoad={() => this.init()}
         />
     );
