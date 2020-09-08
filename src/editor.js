@@ -384,7 +384,7 @@ const HTML = `
 
         editor = init({
             element: document.getElementById('editor'),
-            defaultParagraphSeparator: 'p',
+            defaultParagraphSeparator: 'div',
         })
 
     })(window);
