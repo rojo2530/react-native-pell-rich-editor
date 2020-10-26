@@ -125,10 +125,10 @@ const HTML = `
           if (typeof item === "undefined") return null;
           if (this.range.isContentEditable(this.current.element)) {
             return (
-              '<a id="user-mention" href="#" user-mentioned-id="' +
+              '<a id="user-mention" class="mention" data-denotation-char="@" href="#" data-id="' +
               item.original.user_id +
               '">' +
-              item.original.fullname +
+              "@" + item.original.fullname +
               "</a>"
             );
           }
@@ -384,7 +384,7 @@ const HTML = `
 
         editor = init({
             element: document.getElementById('editor'),
-            defaultParagraphSeparator: 'div',
+            defaultParagraphSeparator: 'p',
         })
 
     })(window);
