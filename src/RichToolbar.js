@@ -3,6 +3,7 @@ import {FlatList, Image, StyleSheet, TouchableOpacity, View} from 'react-native'
 import {actions} from './const';
 
 const defaultActions = [
+    actions.camera,
     actions.insertImage,
     actions.setBold,
     actions.setStrikethrough,
@@ -13,6 +14,8 @@ const defaultActions = [
 
 function getDefaultIcon() {
     const texts = {};
+    texts[actions.camera] = require('../img/icon_format_camera.png');
+
     texts[actions.insertImage] = require('../img/icon_format_media.png');
     texts[actions.setBold] = require('../img/icon_format_bold.png');
     texts[actions.setStrikethrough] = require('../img/icon_format_strikethrough.png');
@@ -140,12 +143,17 @@ export default class RichToolbar extends Component {
                     this.props.onPressAddImage();
                 }
                 break;
+            case actions.camera:
+              if (this.props.insertCamera) {
+                  this.props.insertCamera();
+              }
+              break;
         }
     }
 
     _defaultRenderAction(action, selected) {
         const icon = this._getButtonIcon(action);
-        const {iconSize = 50} = this.props;
+        const {iconSize = 45} = this.props;
         return (
             <TouchableOpacity
                 key={action}
