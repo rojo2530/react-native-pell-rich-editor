@@ -72,6 +72,8 @@ declare module "react-native-pell-rich-editor" {
 
         insertImage: (attributes: any) => void;
 
+        insertCamera: (attributes: any) => void;
+
         init: () => void;
     }
 
@@ -118,6 +120,8 @@ declare module "react-native-pell-rich-editor" {
          * Logic for what happens when you press on the add image button
          * */
         onPressAddImage?: () => void;
+
+        insertCamera?: () => void;
 
         /**
          * Custom actions you want the toolbar to permit.
