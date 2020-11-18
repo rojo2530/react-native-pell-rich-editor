@@ -25,6 +25,7 @@ export const actions = {
     setSubscript: 'subscript',
     setSuperscript: 'superscript',
     setStrikethrough: 'strikethrough',
+    camera: 'camera',
     setHR: 'horizontalRule',
     setIndent: 'indent',
     setOutdent: 'outdent',
